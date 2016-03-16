@@ -13,10 +13,11 @@
 	<title>Recipe Chef</title>
 
 	<!--
-		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+	<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	-->
 
+	<script src="js/recipes.js"></script>
 	<script type="text/javascript"> 
 		var currentPageCount = 0; 
 		var recipeList = new Array(); 
@@ -26,18 +27,13 @@
 	</script>
 
 	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
-	<!-- Bootstrap Sidebar -->
 	<link href="css/simple-sidebar.css" rel="stylesheet">
-
-	<!-- Pinterest-like Responsive Grid using HTML CSS jQuery -->
 	<link href="css/pinBoot.css" rel="stylesheet">
-
-	<!-- Custom fonts -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
-
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
@@ -58,67 +54,68 @@
 
 		}
 	</style>
-	
-	</head>
-	<body>
-		<div id="wrapper">
+</head>
 
-			<!-- Fixed navbar, visible only in small screens -->
-			<nav class="navbar navbar-default navbar-static-top visible-xs">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
+<body>
 
-						<a class="navbar-brand" href="#">Recipe Chef</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse in">
-						<ul class="nav navbar-nav">
-							<li style="padding: 10px;">
-								<label>Name:</label>
-								<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
-								
-								<label>Classification:</label>
-								<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
-								
-								<label>Details:</label>
-								<textarea style="max-width:100%; min-height: 140px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
-								<button class = "btn btn-primary" id="addFromNavBar">Add Recipe</button>	
-							</li>					
-						</ul>
-					</div><!--/.nav-collapse -->
+	<div id="wrapper">
+
+		<!-- Fixed navbar, visible only in small screens -->
+		<nav class="navbar navbar-default navbar-static-top visible-xs">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+					<a class="navbar-brand" href="#">Recipe Chef</a>
 				</div>
-			</nav>
-
-			<!-- Sidebar, visible desktops and large screens -->
-			<div id="sidebar-wrapper" class="visible-sm visible-md visible-lg">
-				<ul class="sidebar-nav" id="sidebar">
-					<li class="sidebar-brand">				
-						<a class="sidebar-brand" href="#" class="active">Recipe Chef</a>
-					</li>
-					
-					<li style="padding: 10px;">
+				<div id="navbar" class="navbar-collapse collapse in">
+					<ul class="nav navbar-nav">
+						<li style="padding: 10px;">
+							<label>Name:</label>
+							<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
 							
-						<label>Name:</label>
-						<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
-
-						<label>Classification:</label>
-						<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
-
-						<label>Details:</label>
-						<textarea style="max-width:100%; min-height: 150px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
-						<button class = "btn btn-primary" id="addFromSideBar">Add recipe</button>	
-					</li>					
-					
-				</ul>
+							<label>Classification:</label>
+							<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
+							
+							<label>Details:</label>
+							<textarea style="max-width:100%; min-height: 140px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
+							<button class = "btn btn-primary" id="addFromNavBar">Add Recipe</button>	
+						</li>					
+					</ul>
+				</div><!--/.nav-collapse -->
 			</div>
-			<!-- /#sidebar-wrapper -->
+		</nav>
 
-			
+		<!-- Sidebar, visible desktops and large screens -->
+		<div id="sidebar-wrapper" class="visible-sm visible-md visible-lg">
+			<ul class="sidebar-nav" id="sidebar">
+				<li class="sidebar-brand">				
+					<a class="sidebar-brand" href="#" class="active">Recipe Chef</a>
+				</li>
+				
+				<li style="padding: 10px;">
+						
+					<label>Name:</label>
+					<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
+
+					<label>Classification:</label>
+					<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
+
+					<label>Details:</label>
+					<textarea style="max-width:100%; min-height: 150px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
+					<button class = "btn btn-primary" id="addFromSideBar">Add recipe</button>	
+				</li>					
+				
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		
 			<!-- Page Content -->
 			<!-- Make sure to keep all page content within the #page-content-wrapper -->
 			<div id="page-content-wrapper">
@@ -146,31 +143,89 @@
 	</div>
 	<!-- /#wrapper -->
 
-	<!-- Firebase -->
-	<script src="js/firebase.js"></script>
 
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 
+	<!-- Firebase -->
+	<script src="js/firebase.js"></script>
+
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
 
-	<!-- Pinterest-like Responsive Grid using HTML CSS jQuery -->
 	<script src="js/pinBoot.js"></script>
 
-	<!-- firebase-related -->
+	<!-- Menu Toggle Script -->
 	<script>
-		var myDataRef = new Firebase('https://glowing-fire-7258.firebaseio.com/');
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+		$("#page-brand").toggleClass("toggled");
+		console.log("toggled");
+	
+		/*
+			$("<h1/>")
+				.css({"display": "inline",
+						"vertical-align": "middle",
+						"padding-left": "10px"
+				})
+				.html("Recipe Chef")
+				.insertAfter("#menu-toggle");
+			});
+		*/
+	});
+	</script>
+
+	<script>
+		var myDataRef = new Firebase("https://glowing-fire-7258.firebaseio.com/");
 
 		function addRecipe(recipe){
+			//var k = myDataRef.name();
+			//console.log(recipe.name+" "+recipe.classification+" "+recipe.details);
 			myDataRef.push(recipe);
+			//console.log( k );
 		}
+		
 
-		//sidebar functions
 		$("#addFromSideBar").click(function(e) {
 			addRecipe(getSideRecipe());
 			clearSideBar();
 		});
+
+
+
+		$("#addFromNavBar").click(function(e) {
+			addRecipe(getNavRecipe());
+			clearNavBar();
+			
+		});
+	  
+	  /*
+	  $("#sidebar > li > textarea.recipeDetailsInput").keypress(function (e) {
+		if (e.keyCode == 13) {
+			addRecipe(getSideRecipe());
+			clearSideBar();
+		}
+	  });
+	  
+	  $("#navbar > ul > li > textarea.recipeDetailsInput").keypress(function (e) {
+		
+		if (e.keyCode == 13) {
+			addRecipe(getNavRecipe());
+			clearSideBar();
+		}
+	  });
+	  */
+
+		function getNavRecipe(){
+			var recipe = {
+				name : $("#navbar > ul > li > input.recipeNameInput").val(),
+				classification : $("#navbar > ul > li > input.recipeClassificationInput").val(),
+				details : $("#navbar > ul > li > textarea.recipeDetailsInput").val(),
+			};
+			return recipe;	  	
+		}
+
 
 		function getSideRecipe(){
 			var recipe = {
@@ -187,54 +242,171 @@
 			$("#sidebar > li > textarea.recipeDetailsInput").val("");
 		}
 
-		//navbar functions
-		$("#addFromNavBar").click(function(e) {
-			addRecipe(getNavRecipe());
-			clearNavBar();
-			
-		});
-
-		function getNavRecipe(){
-			var recipe = {
-				name : $("#navbar > ul > li > input.recipeNameInput").val(),
-				classification : $("#navbar > ul > li > input.recipeClassificationInput").val(),
-				details : $("#navbar > ul > li > textarea.recipeDetailsInput").val(),
-			};
-			return recipe;	  	
-		}
-
 		function clearNavBar(){
 			$("#navbar > ul > li > input.recipeNameInput").val("").focus();
 			$("#navbar > ul > li > input.recipeClassificationInput").val("");
 			$("#navbar > ul > li > textarea.recipeDetailsInput").val("");
 		}
 
-		
+		  
 		myDataRef.on("child_added", function(snapshot) {
 			var input = snapshot.val();
 			
 			recipeList.push(input);
+			currentPageCount = (parseInt(recipeList.length/recipePerPage)+1);
+			
+			if(currentPageCount%recipePerPage!=0){
+				console.log(currentPageCount+" "+recipeList.length);
+				setPagination(currentPageCount);
+			}
 
-			displayRecipeEntry(input.name, 
-								input.classification, 
-								input.details);
+			recipeDisplayed = $("#recipesDiv > article").length;
+
+			if( recipeDisplayed<=5 ){
+				displayRecipeEntry(input.name, 
+									input.classification, 
+									input.details);
+				if( recipeList.length % recipePerPage==0 ){
+					setPage(currentPageCount-1);
+				}
+				else{
+					setPage(currentPageCount);
+				}
+			}
+			//console.log(recipeList);
 		});
 
 
+		function backOnePage(){
+			var gotopage = parseInt($(".pagination > li.active").text());
+			setPage( (gotopage-1) );
+		}
+
+		function forwardOnePage(){
+			var gotopage = parseInt($(".pagination > li.active").text());
+			setPage( (gotopage+1) );
+		}
+
+		function setPagination(currentPageCount){
+			var content = $("#page-content-wrapper");
+			var container = $(".container-fluid");
+			var pageContainer = $("#pages").html("");
+
+			var nav = $("<nav/>");
+			var ul = $("<ul/>").addClass("pagination");
+			
+
+			var pagination = $("#pagination").html("");
+
+			//*
+			var p = $("<span/>")
+						.attr("aria-hidden", "true")
+						.html("&laquo;")
+						.click(function(){
+							backOnePage();
+						});
+
+			var prev = $("<li/>").append(
+						$("<a/>")
+							.html(p)
+							.attr("href", "#")
+							.attr("aria-label", "Previous")
+						).appendTo(ul);
+			//*/
 		
+			for(i=0; i<currentPageCount; i++){
+				var li = $("<li/>").append(
+							$("<a/>")
+								.html((i+1))
+								.attr("href", "#")
+								.click(function(){
+									setPage( parseInt(this.innerHTML) );
+								})
+							).appendTo(ul);
+
+				
+				
+				//$("#page-content-wrapper").append( $("<a/>").html(1).attr("href", "#") )
+			}
+
+			//*
+			var n = $("<span/>")
+						.attr("aria-hidden", "true")
+						.html("&raquo;")
+						.click(function(){
+							forwardOnePage();
+						});
+
+			var next = $("<li/>").append(
+						$("<a/>")
+							.html(n)
+							.attr("href", "#")
+							.attr("aria-label", "Next")
+						).appendTo(ul);
+			//*/
+
+			nav.append(ul);
+			pageContainer.append(nav);
+
+			//container.append(nav);
+			//container.appendTo(content);
+
+		}
+
+		//pagination code modified from CMSC 100 exercise
+		function setPage( pageNum ){
+			console.log("page "+pageNum);
+			if(pageNum<=0 || pageNum>currentPageCount) return;
+
+			$("#recipesDiv").html("");
+
+			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
+			//console.log(pageNum);
+
+			for(var i=0, j=start; i<recipePerPage && j<recipeList.length; i++, j++){
+				//console.log(recipeList.length+" vs "+j);
+				displayRecipeEntry(recipeList[j].name, 
+									recipeList[j].classification, 
+									recipeList[j].details);
+				recipeDisplayed = i+1;
+			}
+			//console.log( parseInt(start/recipePerPage) + 1);
+			
+			setActivePage(pageNum);
+		}
+
+		function setActivePage(page){
+			$($("ul.pagination > li")[activePage]).removeClass("active");
+
+			$($("ul.pagination > li")[page]).addClass("active");
+
+			activePage = page;
+		}
+		//var i=0;
 		function displayRecipeEntry(recipeName, recipeClassification, recipeDetails) {
+			//console.log(i+1);
 			
 			var article = $("<article/>")
 							.addClass("white-panel")
 							.css({
 								"word-wrap" : "break-word",
+								//"background" : "url('img/left.jpg')",
+								//"background-repeat" : "no-repeat",
+								//"background-size" : "100% 100%",
 							});
+
+
+			//var rightPad = Math.round($("article.white-panel").width()*0.2);
+				//rightPad+="px";
+				//console.log('"'+rightPad+'"');
 
 			var wrapper = $("<article/>")
 							.addClass("article-wrapper")
 							.css({
 									"word-wrap" : "break-word",
+									//"width" : "auto",
 									"padding" : "5%",
+									//"padding-right" : Math.round($("article.white-panel").width()*0.255)+"px"
 								});
 
 
@@ -264,112 +436,37 @@
 			
 			wrapper.appendTo(article);
 
+
+			//var w = ;
+				//width+="px";
+			//var h = $("article.white-panel").height();
+				//height+="px";
+
 			article.appendTo($("#recipesDiv"));
 
+
+
+			//alert(recipeName+" "+recipeClassification+" "+recipeDetails);
+			//console.log(recipeName+" "+recipeClassification+" "+recipeDetails);
 			$("#recipesDiv")[0].scrollTop = $("#recipesDiv")[0].scrollHeight;
 		};
-	</script>
 
-	<!-- Menu Toggle Script -->
-	<script>
-	$("#menu-toggle").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled");
-		$("#page-brand").toggleClass("toggled");
-	});
-	</script>
+		//*
+		$(document).ready(function(){
+			for(i=0; i<recipe.length; i++ )recipeList.push(recipe[i]);
+			currentPageCount = (parseInt(recipeList.length/recipePerPage)+1);
+			setPagination(currentPageCount);
 
-	<!-- pagination -->
-	<script type="text/javascript">
-		function backOnePage(){
-			var gotopage = parseInt($(".pagination > li.active").text());
-			setPage( (gotopage-1) );
-		}
-
-		function forwardOnePage(){
-			var gotopage = parseInt($(".pagination > li.active").text());
-			setPage( (gotopage+1) );
-		}
-
-		function setPagination(currentPageCount){
-			var content = $("#page-content-wrapper");
-			var container = $(".container-fluid");
-			var pageContainer = $("#pages").html("");
-
-			var nav = $("<nav/>");
-			var ul = $("<ul/>").addClass("pagination");
-			
-
-			var pagination = $("#pagination").html("");
-
-			var p = $("<span/>")
-						.attr("aria-hidden", "true")
-						.html("&laquo;")
-						.click(function(){
-							backOnePage();
-						});
-
-			var prev = $("<li/>").append(
-						$("<a/>")
-							.html(p)
-							.attr("href", "#")
-							.attr("aria-label", "Previous")
-						).appendTo(ul);
-		
-			for(i=0; i<currentPageCount; i++){
-				var li = $("<li/>").append(
-							$("<a/>")
-								.html((i+1))
-								.attr("href", "#")
-								.click(function(){
-									setPage( parseInt(this.innerHTML) );
-								})
-							).appendTo(ul);
+			for(j=0; j<recipePerPage; j++){
+				displayRecipeEntry(recipe[j].name, recipe[j].classification, recipe[j].details);
 			}
 
-			var n = $("<span/>")
-						.attr("aria-hidden", "true")
-						.html("&raquo;")
-						.click(function(){
-							forwardOnePage();
-						});
+			setActivePage(1);
+		});
+		//*/
 
-			var next = $("<li/>").append(
-						$("<a/>")
-							.html(n)
-							.attr("href", "#")
-							.attr("aria-label", "Next")
-						).appendTo(ul);
-
-			nav.append(ul);
-			pageContainer.append(nav);
-
-		}
-
-		//pagination code modified from CMSC 100 exercise
-		function setPage( pageNum ){
-			if(pageNum<=0 || pageNum>currentPageCount) return;
-
-			$("#recipesDiv").html("");
-
-			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
-
-			for(var i=0, j=start; i<recipePerPage && j<recipeList.length; i++, j++){
-				displayRecipeEntry(recipeList[j].name, 
-									recipeList[j].classification, 
-									recipeList[j].details);
-				recipeDisplayed = i+1;
-			}
-			
-			setActivePage(pageNum);
-		}
-
-		function setActivePage(page){
-			$($("ul.pagination > li")[activePage]).removeClass("active");
-			$($("ul.pagination > li")[page]).addClass("active");
-			activePage = page;
-		}
 	</script>
 
-	</body>
+</body>
+
 </html>
