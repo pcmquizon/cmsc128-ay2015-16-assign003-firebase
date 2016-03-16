@@ -12,27 +12,19 @@
 
 	<title>Recipe Chef</title>
 
-	<!--
-	<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	-->
-
-	<script src="js/recipes.js"></script>
-	<script type="text/javascript"> 
-		var currentPageCount = 0; 
-		var recipeList = new Array(); 
-		var recipePerPage = 5;
-		var activePage = 1;
-		var recipeDisplayed = 0;
-	</script>
-
 	<!-- Bootstrap Core CSS -->
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
+
+	<!-- sidebar -->
 	<link href="css/simple-sidebar.css" rel="stylesheet">
+
+	<!-- Stylesheet: Pinterest-like Responsive Grid using HTML CSS jQuery -->
 	<link href="css/pinBoot.css" rel="stylesheet">
+
+	<!-- Custom font -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -54,6 +46,17 @@
 
 		}
 	</style>
+
+	<!-- for offline testing -->
+	<script src="js/recipes.js"></script>
+	
+	<script type="text/javascript"> 
+		var currentPageCount = 0; 
+		var recipeList = new Array(); 
+		var recipePerPage = 5;
+		var activePage = 1;
+		var recipeDisplayed = 0;
+	</script>
 </head>
 
 <body>
@@ -125,12 +128,12 @@
 				<h1 id="page-brand" class="toggled" style="display: inline; vertical-align: middle; padding-left: 10px;">Recipe Chef</h1>
 				<div class="container-fluid">
 					
-					<div class="row">	
 					<!-- Recipes go here -->
+					<div class="row">	
 						<section class="col-lg-12" id="recipesDiv" style="margin-top: 13px;"></section>
 					</div>
 					
-					<!-- Pagination go here -->
+					<!-- Pagination goes here -->
 					<div id="pages"></div>
 
 
@@ -153,79 +156,32 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="js/bootstrap.min.js"></script>
 
+	<!-- Script: Pinterest-like Responsive Grid using HTML CSS jQuery -->
 	<script src="js/pinBoot.js"></script>
 
 	<!-- Menu Toggle Script -->
-	<script>
-	$("#menu-toggle").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled");
-		$("#page-brand").toggleClass("toggled");
-		console.log("toggled");
-	
-		/*
-			$("<h1/>")
-				.css({"display": "inline",
-						"vertical-align": "middle",
-						"padding-left": "10px"
-				})
-				.html("Recipe Chef")
-				.insertAfter("#menu-toggle");
-			});
-		*/
-	});
+	<script type="text/javascript">
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+			$("#page-brand").toggleClass("toggled");
+		});
 	</script>
 
-	<script>
+	<!-- firebase-related -->
+	<script type="text/javascript">
 		var myDataRef = new Firebase("https://glowing-fire-7258.firebaseio.com/");
 
 		function addRecipe(recipe){
-			//var k = myDataRef.name();
-			//console.log(recipe.name+" "+recipe.classification+" "+recipe.details);
 			myDataRef.push(recipe);
-			//console.log( k );
 		}
 		
 
+		//sidebar functions
 		$("#addFromSideBar").click(function(e) {
 			addRecipe(getSideRecipe());
 			clearSideBar();
 		});
-
-
-
-		$("#addFromNavBar").click(function(e) {
-			addRecipe(getNavRecipe());
-			clearNavBar();
-			
-		});
-	  
-	  /*
-	  $("#sidebar > li > textarea.recipeDetailsInput").keypress(function (e) {
-		if (e.keyCode == 13) {
-			addRecipe(getSideRecipe());
-			clearSideBar();
-		}
-	  });
-	  
-	  $("#navbar > ul > li > textarea.recipeDetailsInput").keypress(function (e) {
-		
-		if (e.keyCode == 13) {
-			addRecipe(getNavRecipe());
-			clearSideBar();
-		}
-	  });
-	  */
-
-		function getNavRecipe(){
-			var recipe = {
-				name : $("#navbar > ul > li > input.recipeNameInput").val(),
-				classification : $("#navbar > ul > li > input.recipeClassificationInput").val(),
-				details : $("#navbar > ul > li > textarea.recipeDetailsInput").val(),
-			};
-			return recipe;	  	
-		}
-
 
 		function getSideRecipe(){
 			var recipe = {
@@ -242,27 +198,45 @@
 			$("#sidebar > li > textarea.recipeDetailsInput").val("");
 		}
 
+		//navbar functions
+		$("#addFromNavBar").click(function(e) {
+			addRecipe(getNavRecipe());
+			clearNavBar();
+		});
+
+		function getNavRecipe(){
+			var recipe = {
+				name : $("#navbar > ul > li > input.recipeNameInput").val(),
+				classification : $("#navbar > ul > li > input.recipeClassificationInput").val(),
+				details : $("#navbar > ul > li > textarea.recipeDetailsInput").val(),
+			};
+			return recipe;	  	
+		}
+
 		function clearNavBar(){
 			$("#navbar > ul > li > input.recipeNameInput").val("").focus();
 			$("#navbar > ul > li > input.recipeClassificationInput").val("");
 			$("#navbar > ul > li > textarea.recipeDetailsInput").val("");
 		}
 
-		  
+
+		//listener everytime a recipe is added, whether via loading or manual		  
 		myDataRef.on("child_added", function(snapshot) {
 			var input = snapshot.val();
 			
 			recipeList.push(input);
 			currentPageCount = (parseInt(recipeList.length/recipePerPage)+1);
 			
+			//recompute pagination for each added recipe
 			if(currentPageCount%recipePerPage!=0){
-				console.log(currentPageCount+" "+recipeList.length);
 				setPagination(currentPageCount);
 			}
 
+			//number of recipes shown in page
 			recipeDisplayed = $("#recipesDiv > article").length;
 
-			if( recipeDisplayed<=5 ){
+			//display recipe
+			if( recipeDisplayed<=recipePerPage ){
 				displayRecipeEntry(input.name, 
 									input.classification, 
 									input.details);
@@ -273,32 +247,34 @@
 					setPage(currentPageCount);
 				}
 			}
-			//console.log(recipeList);
 		});
 
-
+		//move back one page from current page,
+		//triggered when previous arrow in pagination area is clicked
 		function backOnePage(){
 			var gotopage = parseInt($(".pagination > li.active").text());
 			setPage( (gotopage-1) );
 		}
 
+		//move forward one page from current page,
+		//triggered when next arrow in pagination area is clicked
 		function forwardOnePage(){
 			var gotopage = parseInt($(".pagination > li.active").text());
 			setPage( (gotopage+1) );
 		}
 
+		//display page numbers / pagination
 		function setPagination(currentPageCount){
-			var content = $("#page-content-wrapper");
-			var container = $(".container-fluid");
+			//clear pagination area
 			var pageContainer = $("#pages").html("");
-
-			var nav = $("<nav/>");
-			var ul = $("<ul/>").addClass("pagination");
-			
-
 			var pagination = $("#pagination").html("");
 
-			//*
+			var nav = $("<nav/>");
+
+			//where updated pagination will be added
+			var ul = $("<ul/>").addClass("pagination");
+
+			//previous arrow			
 			var p = $("<span/>")
 						.attr("aria-hidden", "true")
 						.html("&laquo;")
@@ -306,30 +282,27 @@
 							backOnePage();
 						});
 
+			//previous button
 			var prev = $("<li/>").append(
 						$("<a/>")
 							.html(p)
 							.attr("href", "#")
 							.attr("aria-label", "Previous")
 						).appendTo(ul);
-			//*/
-		
-			for(i=0; i<currentPageCount; i++){
-				var li = $("<li/>").append(
-							$("<a/>")
-								.html((i+1))
-								.attr("href", "#")
-								.click(function(){
-									setPage( parseInt(this.innerHTML) );
-								})
-							).appendTo(ul);
 
-				
-				
-				//$("#page-content-wrapper").append( $("<a/>").html(1).attr("href", "#") )
+			//append page numbers		
+			for(i=0; i<currentPageCount; i++){
+				$("<li/>").append(
+					$("<a/>")
+						.html((i+1))
+						.attr("href", "#")
+						.click(function(){
+							setPage( parseInt(this.innerHTML) );
+						})
+					).appendTo(ul);
 			}
 
-			//*
+			//next arrow
 			var n = $("<span/>")
 						.attr("aria-hidden", "true")
 						.html("&raquo;")
@@ -337,19 +310,16 @@
 							forwardOnePage();
 						});
 
+			//next button
 			var next = $("<li/>").append(
 						$("<a/>")
 							.html(n)
 							.attr("href", "#")
 							.attr("aria-label", "Next")
 						).appendTo(ul);
-			//*/
 
 			nav.append(ul);
 			pageContainer.append(nav);
-
-			//container.append(nav);
-			//container.appendTo(content);
 
 		}
 
@@ -358,59 +328,48 @@
 			console.log("page "+pageNum);
 			if(pageNum<=0 || pageNum>currentPageCount) return;
 
+			//clear recipes displayed
 			$("#recipesDiv").html("");
 
+			//start index of recipes to be displayed
 			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
-			//console.log(pageNum);
 
+			//display recipes
 			for(var i=0, j=start; i<recipePerPage && j<recipeList.length; i++, j++){
-				//console.log(recipeList.length+" vs "+j);
 				displayRecipeEntry(recipeList[j].name, 
 									recipeList[j].classification, 
 									recipeList[j].details);
 				recipeDisplayed = i+1;
 			}
-			//console.log( parseInt(start/recipePerPage) + 1);
-			
 			setActivePage(pageNum);
 		}
 
 		function setActivePage(page){
+			//update highlighted page in pagination area
 			$($("ul.pagination > li")[activePage]).removeClass("active");
-
 			$($("ul.pagination > li")[page]).addClass("active");
-
 			activePage = page;
 		}
-		//var i=0;
+
 		function displayRecipeEntry(recipeName, recipeClassification, recipeDetails) {
-			//console.log(i+1);
-			
+
+			//recipe container
 			var article = $("<article/>")
 							.addClass("white-panel")
 							.css({
 								"word-wrap" : "break-word",
-								//"background" : "url('img/left.jpg')",
-								//"background-repeat" : "no-repeat",
-								//"background-size" : "100% 100%",
 							});
 
-
-			//var rightPad = Math.round($("article.white-panel").width()*0.2);
-				//rightPad+="px";
-				//console.log('"'+rightPad+'"');
-
+			//recipe wrapper
 			var wrapper = $("<article/>")
 							.addClass("article-wrapper")
 							.css({
 									"word-wrap" : "break-word",
-									//"width" : "auto",
 									"padding" : "5%",
-									//"padding-right" : Math.round($("article.white-panel").width()*0.255)+"px"
 								});
 
-
-			wrapper.append(	//title
+			//recipe title
+			wrapper.append(
 						$("<strong/>")
 							.html(recipeName)
 							.css({
@@ -419,12 +378,16 @@
 								"word-wrap" : "break-word"
 							})
 					);
-			wrapper.append(	//classification
+
+			//recipe classification
+			wrapper.append(
 						$("<span/>")
 							.html("(<em>"+recipeClassification+"</em>)")
 							.css({"word-wrap" : "break-word"})
 					);
-			wrapper.append(	//details
+
+			//recipe details
+			wrapper.append(
 						$("<p/>")
 							.text(recipeDetails)
 							.css({
@@ -434,24 +397,17 @@
 							})
 					);
 			
+			//add recipe content to recipe container
 			wrapper.appendTo(article);
 
-
-			//var w = ;
-				//width+="px";
-			//var h = $("article.white-panel").height();
-				//height+="px";
-
+			//show recipe
 			article.appendTo($("#recipesDiv"));
 
-
-
-			//alert(recipeName+" "+recipeClassification+" "+recipeDetails);
-			//console.log(recipeName+" "+recipeClassification+" "+recipeDetails);
 			$("#recipesDiv")[0].scrollTop = $("#recipesDiv")[0].scrollHeight;
 		};
 
 		//*
+		//for offline testing
 		$(document).ready(function(){
 			for(i=0; i<recipe.length; i++ )recipeList.push(recipe[i]);
 			currentPageCount = (parseInt(recipeList.length/recipePerPage)+1);
