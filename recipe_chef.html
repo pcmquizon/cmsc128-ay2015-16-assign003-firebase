@@ -18,16 +18,17 @@
 	-->
 
 	<script type="text/javascript"> 
+		var currentPageCount = 0; 
 		var recipeList = new Array(); 
 		var recipePerPage = 5;
+		var activePage = 1;
+		var recipeDisplayed = 0;
 	</script>
 
 	<!-- Bootstrap Core CSS -->
-	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Custom CSS -->
-
 	<!-- Bootstrap Sidebar -->
 	<link href="css/simple-sidebar.css" rel="stylesheet">
 
@@ -274,6 +275,98 @@
 		$("#wrapper").toggleClass("toggled");
 		$("#page-brand").toggleClass("toggled");
 	});
+	</script>
+
+	<!-- pagination -->
+	<script type="text/javascript">
+		function backOnePage(){
+			var gotopage = parseInt($(".pagination > li.active").text());
+			setPage( (gotopage-1) );
+		}
+
+		function forwardOnePage(){
+			var gotopage = parseInt($(".pagination > li.active").text());
+			setPage( (gotopage+1) );
+		}
+
+		function setPagination(currentPageCount){
+			var content = $("#page-content-wrapper");
+			var container = $(".container-fluid");
+			var pageContainer = $("#pages").html("");
+
+			var nav = $("<nav/>");
+			var ul = $("<ul/>").addClass("pagination");
+			
+
+			var pagination = $("#pagination").html("");
+
+			var p = $("<span/>")
+						.attr("aria-hidden", "true")
+						.html("&laquo;")
+						.click(function(){
+							backOnePage();
+						});
+
+			var prev = $("<li/>").append(
+						$("<a/>")
+							.html(p)
+							.attr("href", "#")
+							.attr("aria-label", "Previous")
+						).appendTo(ul);
+		
+			for(i=0; i<currentPageCount; i++){
+				var li = $("<li/>").append(
+							$("<a/>")
+								.html((i+1))
+								.attr("href", "#")
+								.click(function(){
+									setPage( parseInt(this.innerHTML) );
+								})
+							).appendTo(ul);
+			}
+
+			var n = $("<span/>")
+						.attr("aria-hidden", "true")
+						.html("&raquo;")
+						.click(function(){
+							forwardOnePage();
+						});
+
+			var next = $("<li/>").append(
+						$("<a/>")
+							.html(n)
+							.attr("href", "#")
+							.attr("aria-label", "Next")
+						).appendTo(ul);
+
+			nav.append(ul);
+			pageContainer.append(nav);
+
+		}
+
+		//pagination code modified from CMSC 100 exercise
+		function setPage( pageNum ){
+			if(pageNum<=0 || pageNum>currentPageCount) return;
+
+			$("#recipesDiv").html("");
+
+			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
+
+			for(var i=0, j=start; i<recipePerPage && j<recipeList.length; i++, j++){
+				displayRecipeEntry(recipeList[j].name, 
+									recipeList[j].classification, 
+									recipeList[j].details);
+				recipeDisplayed = i+1;
+			}
+			
+			setActivePage(pageNum);
+		}
+
+		function setActivePage(page){
+			$($("ul.pagination > li")[activePage]).removeClass("active");
+			$($("ul.pagination > li")[page]).addClass("active");
+			activePage = page;
+		}
 	</script>
 
 	</body>
