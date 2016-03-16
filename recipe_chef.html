@@ -3,29 +3,50 @@
   <head>
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
+    <link rel='stylesheet' type='text/css' href='css/example.css'>
   </head>
   <body>
-    <div id='messagesDiv'></div>
-    <input type='text' id='nameInput' placeholder='Name'>
-    <input type='text' id='messageInput' placeholder='Message'>
+    <div id='recipesDiv'></div>
+    <div id='menuDiv'>
+      <input type='text' id='recipeNameInput' placeholder='Recipe Name'/>
+      <input type='text' id='recipeClassificationInput' placeholder='Classification'/>
+      <textarea id='recipeDetailsInput' placeholder='Recipe Details'></textarea>
+    </div>
+    
+    
     <script>
-      var myDataRef = new Firebase('https://tyfg0qtdxme.firebaseio-demo.com/');
-      $('#messageInput').keypress(function (e) {
+      var myDataRef = new Firebase('https://glowing-fire-7258.firebaseio.com/');
+      $('#recipeDetailsInput').keypress(function (e) {
         if (e.keyCode == 13) {
-          var name = $('#nameInput').val();
-          var text = $('#messageInput').val();
-          myDataRef.push({name: name, text: text});
-          $('#messageInput').val('');
+          var recipe = {
+            name : $('#recipeNameInput').val(),
+            classification : $('#recipeClassificationInput').val(),
+            details : $('#recipeDetailsInput').val()
+          }
+          
+          myDataRef.push(recipe);
+          $('#recipeNameInput').val('').focus();
+          $('#recipeClassificationInput').val('');
+          $('#recipeDetailsInput').val('');
         }
       });
+
       myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        displayChatMessage(message.name, message.text);
+        var input = snapshot.val();
+        displayRecipeEntry(input.name, input.classification, input.details);
       });
-      function displayChatMessage(name, text) {
-        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+
+      var i=0;
+      function displayRecipeEntry(recipeName, recipeClassification, recipeDetails) {
+        console.log(++i);
+        $('<p/>').text(recipeDetails).prepend(
+            $('<em/>').text('('+recipeClassification+') ').prepend(
+              $('<strong/>').text(recipeName+' ')
+            )
+        ).appendTo($('#recipesDiv'));
+        //alert(recipeName+" "+recipeClassification+" "+recipeDetails);
+        console.log(recipeName+" "+recipeClassification+" "+recipeDetails);
+        $('#recipesDiv')[0].scrollTop = $('#recipesDiv')[0].scrollHeight;
       };
     </script>
   </body>
