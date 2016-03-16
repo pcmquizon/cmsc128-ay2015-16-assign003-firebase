@@ -1,53 +1,280 @@
-<!doctype html>
-<html>
-  <head>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='css/example.css'>
-  </head>
-  <body>
-    <div id='recipesDiv'></div>
-    <div id='menuDiv'>
-      <input type='text' id='recipeNameInput' placeholder='Recipe Name'/>
-      <input type='text' id='recipeClassificationInput' placeholder='Classification'/>
-      <textarea id='recipeDetailsInput' placeholder='Recipe Details'></textarea>
-    </div>
-    
-    
-    <script>
-      var myDataRef = new Firebase('https://glowing-fire-7258.firebaseio.com/');
-      $('#recipeDetailsInput').keypress(function (e) {
-        if (e.keyCode == 13) {
-          var recipe = {
-            name : $('#recipeNameInput').val(),
-            classification : $('#recipeClassificationInput').val(),
-            details : $('#recipeDetailsInput').val()
-          }
-          
-          myDataRef.push(recipe);
-          $('#recipeNameInput').val('').focus();
-          $('#recipeClassificationInput').val('');
-          $('#recipeDetailsInput').val('');
-        }
-      });
+<!DOCTYPE html>
+<html lang="en">
 
-      myDataRef.on('child_added', function(snapshot) {
-        var input = snapshot.val();
-        displayRecipeEntry(input.name, input.classification, input.details);
-      });
+<head>
 
-      var i=0;
-      function displayRecipeEntry(recipeName, recipeClassification, recipeDetails) {
-        console.log(++i);
-        $('<p/>').text(recipeDetails).prepend(
-            $('<em/>').text('('+recipeClassification+') ').prepend(
-              $('<strong/>').text(recipeName+' ')
-            )
-        ).appendTo($('#recipesDiv'));
-        //alert(recipeName+" "+recipeClassification+" "+recipeDetails);
-        console.log(recipeName+" "+recipeClassification+" "+recipeDetails);
-        $('#recipesDiv')[0].scrollTop = $('#recipesDiv')[0].scrollHeight;
-      };
-    </script>
-  </body>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="recipe chef - takes recipe name, its
+										its classification and details">
+	<meta name="author" content="pcmquizon">
+
+	<title>Recipe Chef</title>
+
+	<!--
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+	-->
+
+	<script type="text/javascript"> 
+		var recipeList = new Array(); 
+		var recipePerPage = 5;
+	</script>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+
+	<!-- Bootstrap Sidebar -->
+	<link href="css/simple-sidebar.css" rel="stylesheet">
+
+	<!-- Pinterest-like Responsive Grid using HTML CSS jQuery -->
+	<link href="css/pinBoot.css" rel="stylesheet">
+
+
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
+		@media (max-width:768px){
+			#sidebar-wrapper > *, #menu-toggle {
+				visibility: hidden;
+			}
+
+			#page-content-wrapper {
+				padding-top: 0px;
+			}
+
+		}
+	</style>
+	
+	</head>
+	<body>
+		<div id="wrapper">
+
+			<!-- Fixed navbar, visible only in small screens -->
+			<nav class="navbar navbar-default navbar-static-top visible-xs">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<a class="navbar-brand" href="#">Recipe Chef</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse in">
+						<ul class="nav navbar-nav">
+							<li style="padding: 10px;">
+								<label>Name:</label>
+								<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
+								
+								<label>Classification:</label>
+								<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
+								
+								<label>Details:</label>
+								<textarea style="max-width:100%; min-height: 140px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
+								<button class = "btn btn-primary" id="addFromNavBar">Add Recipe</button>	
+							</li>					
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
+
+			<!-- Sidebar, visible desktops and large screens -->
+			<div id="sidebar-wrapper" class="visible-sm visible-md visible-lg">
+				<ul class="sidebar-nav" id="sidebar">
+					<li class="sidebar-brand">				
+						<a class="sidebar-brand" href="#" class="active">Recipe Chef</a>
+					</li>
+					
+					<li style="padding: 10px;">
+							
+						<label>Name:</label>
+						<input type="text" class = "form-group form-control recipeNameInput" placeholder="What is the recipe called?">
+
+						<label>Classification:</label>
+						<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
+
+						<label>Details:</label>
+						<textarea style="max-width:100%; min-height: 150px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
+						<button class = "btn btn-primary" id="addFromSideBar">Add recipe</button>	
+					</li>					
+					
+				</ul>
+			</div>
+			<!-- /#sidebar-wrapper -->
+
+			
+			<!-- Page Content -->
+			<!-- Make sure to keep all page content within the #page-content-wrapper -->
+			<div id="page-content-wrapper">
+				<a href="#menu-toggle" class="btn btn-lg btn-default btn-group" id="menu-toggle" >
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</a>
+				<h1 id="page-brand" class="toggled" style="display: inline; vertical-align: middle; padding-left: 10px;">Recipe Chef</h1>
+				<div class="container-fluid">
+					
+					<div class="row">	
+					<!-- Recipes go here -->
+						<section class="col-lg-12" id="recipesDiv" style="margin-top: 13px;"></section>
+					</div>
+					
+					<!-- Pagination go here -->
+					<div id="pages"></div>
+
+
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->	
+		
+		
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Firebase -->
+	<script src="js/firebase.js"></script>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Pinterest-like Responsive Grid using HTML CSS jQuery -->
+	<script src="js/pinBoot.js"></script>
+
+	<!-- firebase-related -->
+	<script>
+		var myDataRef = new Firebase('https://glowing-fire-7258.firebaseio.com/');
+
+		function addRecipe(recipe){
+			myDataRef.push(recipe);
+		}
+
+		//sidebar functions
+		$("#addFromSideBar").click(function(e) {
+			addRecipe(getSideRecipe());
+			clearSideBar();
+		});
+
+		function getSideRecipe(){
+			var recipe = {
+				name : $("#sidebar > li > input.recipeNameInput").val(),
+				classification : $("#sidebar > li > input.recipeClassificationInput").val(),
+				details : $("#sidebar > li > textarea.recipeDetailsInput").val()
+			};
+			return recipe;	  	
+		}
+
+		function clearSideBar(){
+			$("#sidebar > li > input.recipeNameInput").val("").focus();
+			$("#sidebar > li > input.recipeClassificationInput").val("");
+			$("#sidebar > li > textarea.recipeDetailsInput").val("");
+		}
+
+		//navbar functions
+		$("#addFromNavBar").click(function(e) {
+			addRecipe(getNavRecipe());
+			clearNavBar();
+			
+		});
+
+		function getNavRecipe(){
+			var recipe = {
+				name : $("#navbar > ul > li > input.recipeNameInput").val(),
+				classification : $("#navbar > ul > li > input.recipeClassificationInput").val(),
+				details : $("#navbar > ul > li > textarea.recipeDetailsInput").val(),
+			};
+			return recipe;	  	
+		}
+
+		function clearNavBar(){
+			$("#navbar > ul > li > input.recipeNameInput").val("").focus();
+			$("#navbar > ul > li > input.recipeClassificationInput").val("");
+			$("#navbar > ul > li > textarea.recipeDetailsInput").val("");
+		}
+
+		
+		myDataRef.on("child_added", function(snapshot) {
+			var input = snapshot.val();
+			
+			recipeList.push(input);
+
+			displayRecipeEntry(input.name, 
+								input.classification, 
+								input.details);
+		});
+
+
+		
+		function displayRecipeEntry(recipeName, recipeClassification, recipeDetails) {
+			
+			var article = $("<article/>")
+							.addClass("white-panel")
+							.css({
+								"word-wrap" : "break-word",
+							});
+
+			var wrapper = $("<article/>")
+							.addClass("article-wrapper")
+							.css({
+									"word-wrap" : "break-word",
+									"padding" : "5%",
+								});
+
+
+			wrapper.append(	//title
+						$("<strong/>")
+							.html(recipeName)
+							.css({
+								"display" : "block",
+								"margin-bottom" : "10px",
+								"word-wrap" : "break-word"
+							})
+					);
+			wrapper.append(	//classification
+						$("<span/>")
+							.html("(<em>"+recipeClassification+"</em>)")
+							.css({"word-wrap" : "break-word"})
+					);
+			wrapper.append(	//details
+						$("<p/>")
+							.text(recipeDetails)
+							.css({
+								"margin-top" : "10px",
+								"margin-bottom" : "10px",
+								"word-wrap" : "break-word",
+							})
+					);
+			
+			wrapper.appendTo(article);
+
+			article.appendTo($("#recipesDiv"));
+
+			$("#recipesDiv")[0].scrollTop = $("#recipesDiv")[0].scrollHeight;
+		};
+	</script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+		$("#page-brand").toggleClass("toggled");
+	});
+	</script>
+
+	</body>
 </html>
