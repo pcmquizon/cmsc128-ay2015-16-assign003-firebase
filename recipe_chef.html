@@ -64,7 +64,7 @@
 			height: 100%;
 		}
 		@media (max-width:768px){
-			#sidebar-wrapper > *, #menu-toggle, .toggle {
+			#sidebar-wrapper > *, #menu-toggle, div#wrapper.toggle {
 				visibility: hidden;
 			}
 
@@ -356,8 +356,8 @@
 
 			
 			//$("#page-content-wrapper").addClass( ((pageNum-1) % 5).toString() );
-			$("#wrapper").css( {"background": easterColor[((pageNum-1) % 5)] } );
-			$("#page-content-wrapper").css( {"background": easterColor[((pageNum-1) % 5)] } );
+			$("#wrapper, #page-content-wrapper, html").css( {"background": easterColor[((pageNum-1) % 5)] } );
+			
 
 			//start index of recipes to be displayed
 			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
