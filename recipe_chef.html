@@ -27,6 +27,10 @@
 	<!-- Custom font -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
 
+
+	<!-- Background colors -->
+	<link href='css/colors.css' rel='stylesheet' type='text/css'>
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -36,7 +40,7 @@
 
 	<style type="text/css">
 		@media (max-width:768px){
-			#sidebar-wrapper > *, #menu-toggle {
+			#sidebar-wrapper > *, #menu-toggle, .toggle {
 				visibility: hidden;
 			}
 
@@ -49,13 +53,22 @@
 
 	<!-- for offline testing -->
 	<script src="js/recipes.js"></script>
-	
+
 	<script type="text/javascript"> 
 		var currentPageCount = 0; 
 		var recipeList = new Array(); 
 		var recipePerPage = 5;
 		var activePage = 1;
 		var recipeDisplayed = 0;
+		//*
+		var easterColor = [ 
+							"rgba(221,229,254,1.0)", //easter egg blue
+		 					"rgba(255,203,207,1.0)", //easter egg pink
+							"rgba(249,252,157,1.0)", //easter egg yellow
+		 					"rgba(186,243,195,1.0)", //easter egg green
+							"rgba(217,178,255,1.0)", //easter egg purple
+		 					];
+		//*/
 	</script>
 </head>
 
@@ -331,6 +344,10 @@
 			//clear recipes displayed
 			$("#recipesDiv").html("");
 
+			
+			//$("#page-content-wrapper").addClass( ((pageNum-1) % 5).toString() );
+			$("#wrapper").css( {"background": easterColor[((pageNum-1) % 5)] } );
+
 			//start index of recipes to be displayed
 			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
 
@@ -417,7 +434,7 @@
 				displayRecipeEntry(recipe[j].name, recipe[j].classification, recipe[j].details);
 			}
 
-			setActivePage(1);
+			setPage(1);
 		});
 		//*/
 
