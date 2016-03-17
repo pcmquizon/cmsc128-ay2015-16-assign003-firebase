@@ -13,11 +13,14 @@ body {
   max-width: 100%;
   width: 100%;
 }
+
 img {
-  width: 100%;
-  max-width: 100%;
+  /*modification by me*/
+  /*width: 100%;*/
+  /*max-width: 100%;*/
   height: auto;
 }
+
 .white-panel {
   position: absolute;
   background: white;
