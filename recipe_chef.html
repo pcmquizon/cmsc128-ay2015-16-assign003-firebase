@@ -27,10 +27,6 @@
 	<!-- Custom font -->
 	<link href='css/fonts.css' rel='stylesheet' type='text/css'>
 
-
-	<!-- Background colors -->
-	<link href='css/color.css' rel='stylesheet' type='text/css'>
-
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -38,15 +34,15 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-	<!-- for offline testing -->
-	<script src="js/recipes.js"></script>
-
 	<script type="text/javascript"> 
 		var currentPageCount = 1; 
 		var recipeList = new Array(); 
 		var recipePerPage = 5;
 		var activePage = 1;
 		var recipeDisplayed = 0;
+
+		//background colors
+		//www.colourlovers.com/palette/769408/Pastel_Easter_Eggs
 		var color = [ 
 							"rgba(221,229,254,1.0)", //easter egg blue
 		 					"rgba(255,203,207,1.0)", //easter egg pink
@@ -133,14 +129,14 @@
 					<input type="text" class = "form-group form-control recipeClassificationInput" placeholder="Mexican, Asian, French, etc.,"/>
 
 					<label>Details:</label>
-					<textarea style="max-width:100%; min-height: 150px; max-height: 245px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
-					<button class = "btn btn-primary" id="addFromSideBar">Add recipe</button>	
+					<textarea style="max-width:100%; min-height: 200px; max-height: 200px;" class = "form-group form-control recipeDetailsInput" placeholder="What are the ingredients? How to prepare?"></textarea>
+					<button class = "btn btn-primary btn-md pull-right" style="border-radius: 20%;" id="addFromSideBar"><span  style="vertical-align: middle;" class="glyphicon glyphicon-plus-sign"></span><small> Add Recipe</small></button>	
+
 				</li>					
 				
 			</ul>
 		</div>
 		<!-- /#sidebar-wrapper -->
-
 		
 			<!-- Page Content -->
 			<!-- Make sure to keep all page content within the #page-content-wrapper -->
@@ -159,16 +155,12 @@
 					<!-- Pagination goes here -->
 					<div id="pages"></div>
 
-
 				</div>
 			</div>
 			<!-- /#page-content-wrapper -->	
 		
-		
-
 	</div>
 	<!-- /#wrapper -->
-
 
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -282,6 +274,7 @@
 		}
 
 		//display page numbers / pagination
+		//pagination code modified from CMSC 100 exercise
 		function setPagination(currentPageCount){
 			//clear pagination area
 			var pageContainer = $("#pages").html("");
@@ -350,10 +343,8 @@
 			$("#recipesDiv").html("");
 
 			
-			//$("#page-content-wrapper").addClass( ((pageNum-1) % 5).toString() );
 			$("#wrapper, #page-content-wrapper, html, body").css({"background": color[((pageNum-1) % 5)]});
 			
-
 			//start index of recipes to be displayed
 			var start = ( parseInt( pageNum ) -1 ) * recipePerPage;		
 
@@ -431,7 +422,6 @@
 
 			$("#recipesDiv")[0].scrollTop = $("#recipesDiv")[0].scrollHeight;
 		};
-
 
 	</script>
 
