@@ -47,15 +47,13 @@
 		var recipePerPage = 5;
 		var activePage = 1;
 		var recipeDisplayed = 0;
-		//*
-		var easterColor = [ 
+		var color = [ 
 							"rgba(221,229,254,1.0)", //easter egg blue
 		 					"rgba(255,203,207,1.0)", //easter egg pink
 							"rgba(249,252,157,1.0)", //easter egg yellow
 		 					"rgba(186,243,195,1.0)", //easter egg green
 							"rgba(217,178,255,1.0)", //easter egg purple
 		 					];
-		//*/
 	</script>
 
 
@@ -122,7 +120,7 @@
 				<li class="text-center">
 					<a class="sidebar-brand" style="vertical-align: middle;" href="#" class="active">
 						Recipe Chef
-						<img src="img/cookbook.png" style="width: 50px; margin-top: 5px;" alt="Recipe Chef logo"/>
+						<img src="img/cookbook.png" style="width: 50px;" alt="Recipe Chef logo"/>
 					</a>
 				</li>
 				
@@ -205,15 +203,14 @@
 		myDataRef.on("child_added", function(snapshot) {
 			var input = snapshot.val();
 			recipeList.push(input);
+
 			currentPageCount = ( Math.ceil( 
 									parseFloat( recipeList.length/recipePerPage )
 									)
 								);
 			
 			//recompute pagination for each added recipe
-			if(currentPageCount%recipePerPage!=0){
-				setPagination(currentPageCount);
-			}
+			setPagination(currentPageCount);
 
 			//number of recipes shown in page
 			recipeDisplayed = $("#recipesDiv > article").length;
@@ -223,16 +220,10 @@
 				displayRecipeEntry(input.name, 
 									input.classification, 
 									input.details);
-				if( recipeList.length % recipePerPage==0 ){
-					setPage(currentPageCount-1);
-				}
-				else{
-					setPage(currentPageCount);
-				}
+				
+				setPage(currentPageCount);
 			}
 		});
-
-
 
 		//sidebar functions
 		$("#addFromSideBar").click(function(e) {
@@ -360,7 +351,7 @@
 
 			
 			//$("#page-content-wrapper").addClass( ((pageNum-1) % 5).toString() );
-			$("#wrapper, #page-content-wrapper, html").css( {"background": easterColor[((pageNum-1) % 5)] } );
+			$("#wrapper, #page-content-wrapper, html, body").css({"background": color[((pageNum-1) % 5)]});
 			
 
 			//start index of recipes to be displayed
@@ -441,20 +432,6 @@
 			$("#recipesDiv")[0].scrollTop = $("#recipesDiv")[0].scrollHeight;
 		};
 
-		/*
-		//for offline testing
-		$(document).ready(function(){
-			for(i=0; i<recipe.length; i++ )recipeList.push(recipe[i]);
-			currentPageCount = (parseInt(recipeList.length/recipePerPage)+1);
-			setPagination(currentPageCount);
-
-			for(j=0; j<recipePerPage; j++){
-				displayRecipeEntry(recipe[j].name, recipe[j].classification, recipe[j].details);
-			}
-
-			setPage(1);
-		});
-		//*/
 
 	</script>
 
