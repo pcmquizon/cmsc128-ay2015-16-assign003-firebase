@@ -18,16 +18,6 @@
 	src: url(../fonts/JosefinSlab-Regular.ttf);
 }
 
-@font-face {
-	font-family: KK1;
-	src: url(../fonts/Kitchen-Kapers-1.ttf);
-}
-
-@font-face {
-	font-family: KK2;
-	src: url(../fonts/Kitchen-Kapers-2.ttf);
-}
-
 /*
 	Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
 	Georgia, Times, 'Times New Roman', serif;
