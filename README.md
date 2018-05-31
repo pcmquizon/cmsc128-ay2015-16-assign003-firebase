@@ -2,7 +2,7 @@
 Recipe Chef
 ===
 
-###What is it? 
+### What is it?
 
 * Recipe Chef is an application that collects, stores and shows a recipe's details.
 
@@ -13,28 +13,32 @@ Recipe Chef
 
 * The data sent is stored in Firebase, a “complete platform for building mobile and web applications. Firebase provides a realtime JSON database for storing and sync your app's data” (https://www.firebase.com).  
 
+* Demo: http://pcmquizon.github.io/cmsc128-ay2015-16-assign003-firebase
+
 <br/>
 
 References
 ---
 
-####Background Color Palette
+#### Background Color Palette
 * [Pastel Easter Eggs](www.colourlovers.com/palette/769408/Pastel_Easter_Eggs)
 
-####Design
+#### Design
 
 * [Simple Sidebar Template](http://startbootstrap.com/template-overviews/simple-sidebar/)
 * [Navbar Fixed Top Template](http://getbootstrap.com/examples/navbar-fixed-top/)
 * [Pinterest-like Responsive Grid using HTML CSS jQuery](http://bootsnipp.com/snippets/featured/pinterest-like-responsive-grid)
 
-####Fonts
-* [A Little Sunshine](http://www.dafont.com/a-little-sunshine.font) from [dafont](dafont.com)
-* [Josefin Slab & JosefinSans](http://fontpair.co/downloads/Josefin%20Slab%20and%20Josefin%20Sans.zip) from [fontpair](fontpair.co)
+#### Fonts
+* [A Little Sunshine](http://www.dafont.com/a-little-sunshine.font)
+* [Font Pair](http://fontpair.co/)'s [Josefin Slab & JosefinSans](http://fontpair.co/downloads/Josefin%20Slab%20and%20Josefin%20Sans.zip):
+    * [Josefin Slab](http://www.google.com/fonts/specimen/Josefin+Slab)
+    * [Josefinsans](http://www.google.com/fonts/specimen/Josefin+Sans)
 
-####Images
-* [Flat Style Icon IOS/Android](http://studio.envato.com/explore/app-icon-design/5816-flat-style-icon-ios-android) as this app's logo
+#### Images
+* Recipe Chef pseudo [logo](http://microlancer.lancerassets.com/v2/services/01/0bea4078fb11e4a0d9b785dd8accf6/large_cookbook.jpg)
 
-####Tutorials
+#### Tutorials
 * [Firebase 5-min Tutorial](https://firebase.com/tutorial)
 * On [media queries via CSS](https://css-tricks.com/snippets/css/media-queries-for-standard-devices/)
 * On [defining multiple CSS attributes via jQuery](http://stackoverflow.com/questions/447197/how-to-define-multiple-css-attributes-in-jquery)
